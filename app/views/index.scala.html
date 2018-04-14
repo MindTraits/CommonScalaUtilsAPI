@@ -1,0 +1,27 @@
+@(persons:List[Person])
+
+@main("Welcome to Reactivemongo CRUD") {
+
+    <a href="@routes.Application.create">Create</a>
+    
+    <table>
+    	<thead>
+    		<tr>
+    			<td>Name</td>
+    			<td>Age</td>
+    			<td>&nbsp</td>
+    		</tr>
+    	</thead>
+    	@persons.map { person =>
+    		<tr>
+    			<td>@person.name</td>
+    			<td>@person.age</td>
+    			<td>
+    				<a href="@routes.Application.edit(person._id.stringify)">Edit</a>
+    				<a href="@routes.Application.delete(person._id.stringify)">Delete</a>    			
+    			</td>
+    		</tr>
+    	}
+    <table>
+    
+}

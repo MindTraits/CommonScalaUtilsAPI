@@ -1,0 +1,40 @@
+@(personform:Form[Person],id:String="")(implicit req: RequestHeader, messages: Messages)
+
+@import helper._
+
+@radioSelected(value: Option[String], valueCheck: String) = {
+	@if(value != None){
+		@if(value.get == valueCheck){
+			checked="checked"
+		}
+	}
+}
+
+@main("Welcome to Reactivemongo CRUD") {
+
+	@helper.form(action = (
+		if(id==""){
+			helper.CSRF(routes.Application.insert)
+		} else {
+			helper.CSRF(routes.Application.update(id))
+		}
+	), 'id -> "personform") {
+		@inputText(personform("name"), '_label -> "Name (String)", '_showConstraints -> false)
+		@inputText(personform("dob"), '_label -> "Date of birth (dd-mm-yyyy)", '_showConstraints -> false)
+		@inputText(personform("age"), '_label -> "Age (Integer)", '_showConstraints -> false)
+		@inputText(personform("salary"), '_label -> "Salary (Double)", '_showConstraints -> false)
+		@inputText(personform("hobbies"), '_label -> "Hobbies (Multi values. Separate with comma(,))", '_showConstraints -> false)
+		<input type="checkbox" value="true" name="admin" id="admin" @radioSelected(personform("admin").value, "true"))> Admin (Boolean)
+		@inputText(personform("address")("address"), '_label -> "Address (String)", '_showConstraints -> false)
+		@inputText(personform("address")("country"), '_label -> "Country (String)", '_showConstraints -> false)
+		<div style="display:none;">
+			@inputText(personform("_creationDate"))
+			@inputText(personform("_updateDate"))
+		</div>
+		<input type="submit">
+	}
+		
+	<a href="javascript:$('#personform').submit()">Save</a>
+	<a href="@routes.Application.index">Back</a>
+	
+}

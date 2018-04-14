@@ -1,0 +1,22 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Person page for add, update, get and delete person which accept form data and redirect to specific page
+
+GET     /                           controllers.Application.index
+GET     /create					    controllers.Application.create
+POST	/insert						controllers.Application.insert
+GET		/edit						controllers.Application.edit(id:String)	
+POST	/update						controllers.Application.update(id:String)
+GET		/delete/:id					controllers.Application.delete(id:String)
+
+# API for add, update, get and delete country which accept json data and return json data
+
+POST    /addCountry                 controllers.CountryController.insert
+POST    /updateCountry              controllers.CountryController.update 
+POST    /deleteCountry              controllers.CountryController.delete  
+POST    /getCountryList             controllers.CountryController.getCountryList  
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
